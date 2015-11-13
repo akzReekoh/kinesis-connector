@@ -43,6 +43,7 @@ platform.on('close', function () {
  * Listen for the ready event.
  */
 platform.once('ready', function (options) {
+    //set config params
     config = {
         accessKeyId : options.access_key_id,
         secretAccessKey : options.secret_access_key,
