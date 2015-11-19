@@ -1,15 +1,14 @@
 'use strict';
 
-var _        = require('lodash'),
-	AWS      = require('aws-sdk'),
-	platform = require('./platform'),
+var isPlainObject = require('lodash.isplainobject'),
+	platform      = require('./platform'),
 	config, kinesis;
 
 /*
  * Listen for the data event.
  */
 platform.on('data', function (data) {
-	if (_.isPlainObject(data)) {
+	if (isPlainObject(data)) {
 		var params = {
 			Data: JSON.stringify(data),
 			PartitionKey: config.PartitionKey,
@@ -46,6 +45,8 @@ platform.on('close', function () {
  * Listen for the ready event.
  */
 platform.once('ready', function (options) {
+	var AWS = require('aws-sdk');
+
 	//set config params
 	config = {
 		PartitionKey: options.partition_key,
