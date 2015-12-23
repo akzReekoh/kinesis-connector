@@ -1,7 +1,7 @@
 {
   "name": "kinesis-connector",
   "description": "AWS Kinesis Connector Plugin for the Reekoh IoT Platform.",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "author": "Reekoh, Inc.",
   "main": "app.js",
   "scripts": {
@@ -12,7 +12,8 @@
     "url": "https://github.com/Reekoh/kinesis-connector"
   },
   "dependencies": {
-    "aws-sdk": "^2.2.16"
+    "aws-sdk": "^2.2.17",
+    "lodash.isplainobject": "^3.2.0"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
