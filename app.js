@@ -1,6 +1,7 @@
 'use strict';
 
 var isPlainObject = require('lodash.isplainobject'),
+	isArray = require('lodash.isarray'),
 	platform      = require('./platform'),
 	config, kinesis;
 
@@ -8,7 +9,7 @@ var isPlainObject = require('lodash.isplainobject'),
  * Listen for the data event.
  */
 platform.on('data', function (data) {
-	if (isPlainObject(data)) {
+	if (isPlainObject(data) || isArray(data)) {
 		var params = {
 			Data: JSON.stringify(data),
 			PartitionKey: config.PartitionKey,
