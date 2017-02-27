@@ -1,38 +1,44 @@
 {
-  "access_key_id":{
+  "accessKeyId":{
     "label": "Access Key ID",
     "type": "String",
     "required": true,
-    "help": "Please provide your AWS Access Key ID."
+    "help": "Please provide your AWS Access Key ID.",
+    "maxLength": 100
   },
-  "secret_access_key":{
+  "secretAccessKey":{
     "label": "Password",
     "type": "String",
     "required": true,
-    "help": "Please provide your AWS Secret Access Key."
+    "help": "Please provide your AWS Secret Access Key.",
+    "maxLength": 100
   },
-  "stream_name": {
+  "streamName": {
 	"label": "Stream Name",
 	"type": "String",
 	"required": true,
-	"help": "Please provide your AWS Kinesis Stream name."
+	"help": "Please provide your AWS Kinesis Stream name.",
+    "maxLength": 50
   },
-  "partition_key": {
+  "partitionKey": {
 	"label": "Partition Key",
 	"type": "String",
 	"required": true,
-	"help": "Please provide your AWS Kinesis stream's partition key."
+	"help": "Please provide your AWS Kinesis stream's partition key.",
+    "maxLength": 50
   },
   "region":{
     "label": "Region",
     "type": "String",
     "required": true,
-    "help": "Please provide your AWS Region."
+    "help": "Please provide your AWS Region.",
+    "maxLength": 50
   },
-  "api_version":{
+  "apiVersion":{
     "label": "API Version",
     "type": "String",
     "required": true,
-    "help": "Please provide your AWS API Version."
+    "help": "Please provide your AWS API Version.",
+    "maxLength": 50
   }
 }

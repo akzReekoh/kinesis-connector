@@ -1,67 +1,59 @@
-'use strict';
+'use strict'
 
-var isPlainObject = require('lodash.isplainobject'),
-	isArray = require('lodash.isarray'),
-	platform      = require('./platform'),
-	config, kinesis;
+let reekoh = require('reekoh')
+let _plugin = new reekoh.plugins.Connector()
+let isArray = require('lodash.isarray')
+let isPlainObject = require('lodash.isplainobject')
+let kinesis = null
 
-/*
- * Listen for the data event.
+/**
+ * Emitted when device data is received.
+ * This is the event to listen to in order to get real-time data feed from the connected devices.
+ * @param {object} data The data coming from the device represented as JSON Object.
  */
-platform.on('data', function (data) {
-	if (isPlainObject(data) || isArray(data)) {
-		var params = {
-			Data: JSON.stringify(data),
-			PartitionKey: config.PartitionKey,
-			StreamName: config.StreamName
-		};
+_plugin.on('data', (data) => {
+  if (isPlainObject(data) || isArray(data)) {
+    let params = {
+      Data: JSON.stringify(data),
+      PartitionKey: _plugin.config.PartitionKey,
+      StreamName: _plugin.config.StreamName
+    }
 
-		kinesis.putRecord(params, function (error) {
-			if (error)
-				platform.handleException(error);
-			else {
-				platform.log(JSON.stringify({
-					title: 'Kinesis record saved.',
-					data: {
-						Data: data,
-						PartitionKey: config.PartitionKey,
-						StreamName: config.StreamName
-					}
-				}));
-			}
-		});
-	}
-	else
-		platform.handleException(new Error('Invalid data received.'));
-});
+    kinesis.putRecord(params, function (error) {
+      if (error) {
+        _plugin.logException(error)
+      } else {
+        _plugin.log(JSON.stringify({
+          title: 'Kinesis record saved.',
+          data: {
+            Data: data,
+            PartitionKey: _plugin.config.PartitionKey,
+            StreamName: _plugin.config.StreamName
+          }
+        }))
+      }
+    })
+  } else {
+    _plugin.logException(new Error('Invalid data received.'))
+  }
+})
 
-/*
- * Event to listen to in order to gracefully release all resources bound to this service.
+/**
+ * Emitted when the platform bootstraps the plugin. The plugin should listen once and execute its init process.
  */
-platform.on('close', function () {
-	platform.notifyClose();
-});
+_plugin.once('ready', () => {
+  let AWS = require('aws-sdk')
 
-/*
- * Listen for the ready event.
- */
-platform.once('ready', function (options) {
-	var AWS = require('aws-sdk');
+  kinesis = new AWS.Kinesis({
+    accessKeyId: _plugin.config.accessKeyId,
+    secretAccessKey: _plugin.config.secretAccessKey,
+    region: _plugin.config.region,
+    version: _plugin.config.apiVersion,
+    sslEnabled: true
+  })
 
-	//set config params
-	config = {
-		PartitionKey: options.partition_key,
-		StreamName: options.stream_name
-	};
+  _plugin.log('Kinesis Connector has been initialized.')
+  _plugin.emit('init')
+})
 
-	kinesis = new AWS.Kinesis({
-		accessKeyId: options.access_key_id,
-		secretAccessKey: options.secret_access_key,
-		region: options.region,
-		version: options.api_version,
-		sslEnabled: true
-	});
-
-	platform.log('Kinesis Connector Initialized.');
-	platform.notifyReady();
-});
+module.exports = _plugin
