@@ -12,43 +12,43 @@ metadata:
   tags:
     - AWS
     - kinesis
-  config:
-    accessKeyId:
-      label: Access Key ID
-      type: String
-      required: true
-      help: Please provide your AWS Access Key ID.
-      maxLength: 1000
-    secretAccessKey:
-      label: Password
-      type: String
-      required: true
-      help: Please provide your AWS Secret Access Key.
-    streamName:
-      label: Stream Name
-      type: String
-      required: true
-      help: Please provide your AWS Kinesis Stream name.
-      maxLength: 1000
-    partitionKey:
-      label: Partition Key
-      type: String
-      required: true
-      help: Please provide your AWS Kinesis stream's partition key.
-      maxLength: 1000
-    region:
-      label: Region
-      type: String
-      required: true
-      help: Please provide your AWS Region.
-      maxLength: 1000
-    apiVersion:
-      label: API Version
-      type: String
-      required: true
-      help: Please provide your AWS API Version.
-      maxLength: 1000
   release:
     version: 1.0.0
     notes: path/to/RELEASENOTESv1.0.0.md
     image: path/to/docker/image
+    config:
+        accessKeyId:
+          label: Access Key ID
+          type: String
+          required: true
+          help: Please provide your AWS Access Key ID.
+          maxLength: 1000
+        secretAccessKey:
+          label: Password
+          type: String
+          required: true
+          help: Please provide your AWS Secret Access Key.
+        streamName:
+          label: Stream Name
+          type: String
+          required: true
+          help: Please provide your AWS Kinesis Stream name.
+          maxLength: 1000
+        partitionKey:
+          label: Partition Key
+          type: String
+          required: true
+          help: Please provide your AWS Kinesis stream's partition key.
+          maxLength: 1000
+        region:
+          label: Region
+          type: String
+          required: true
+          help: Please provide your AWS Region.
+          maxLength: 1000
+        apiVersion:
+          label: API Version
+          type: String
+          required: true
+          help: Please provide your AWS API Version.
+          maxLength: 1000
